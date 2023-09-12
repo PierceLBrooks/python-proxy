@@ -11,8 +11,8 @@ def netloc_split(loc, default_host=None, default_port=None):
         host_name, port = loc.rsplit(':', 1)
     else:
         host_name, port = loc, None
-    while port and port.endswith('/'):
-        port = port[:len(port)-1]
+    if port and '/' in port:
+        port = port[:port.index('/')]
     return host_name or default_host, int(port) if port else default_port
 
 async def socks_address_stream(reader, n):
